@@ -38,24 +38,24 @@ public class CombinationsAndPermutations {
      * @param k
      * @param preLevelStart 表示上一次选的那个数是从第几开始的
      * @param level， 表示选第几个数 
-     * @param cb
+     * @param results
      * @param buff
      */
     private void chooseCom(int n, int k, int preLevelStart, int level,
-                    ArrayList<ArrayList<Integer>> cb,
+                    ArrayList<ArrayList<Integer>> results,
                     ArrayList<Integer> buff) {
         if(level > k)
             return;
         if(level == k) {
             ArrayList<Integer> cmb = (ArrayList<Integer>)buff.clone();
-            cb.add(cmb);
+            results.add(cmb);
         }
         // 因为是组合 所以只管看后面的数，不用管前面的数了，比如在1,2,3,4,5,6,7里面
         // 如果这次我选了3，那么下一个数就只能从4开始选了，并且还必须给后面
         // 的数流出足够多的数来，比如一共选3个数，我第二个数就只能选到6，不能选7了
         for(int i=preLevelStart+1; i<=n-k+1+level; ++i) {
             buff.add(i);
-            chooseCom(n, k, i, level+1, cb, buff);
+            chooseCom(n, k, i, level+1, results, buff);
             buff.remove(buff.size()-1);
         }
     }
