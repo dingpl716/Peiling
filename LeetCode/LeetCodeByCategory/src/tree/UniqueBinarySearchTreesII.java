@@ -20,7 +20,7 @@ import definition.TreeNode;
  * 先构建所有可能的左子树，再构建所有可能的有子树，
  * 然后类似于I里面左子树*右子树的方式，构建所有以他们为子节点的父节点
  * 把这些父节点全部加入到ans里面
- * 返回ans，这个ans就是上一层调用我们需要返回的所有可能的左子树，或者是右子树
+ * 返回ans，这个ans就是上一层调用的，且需要返回的所有可能的左子树，或者是右子树
  */ 
 public class UniqueBinarySearchTreesII {
 
