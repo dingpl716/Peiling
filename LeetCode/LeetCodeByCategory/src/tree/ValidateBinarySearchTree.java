@@ -19,6 +19,15 @@ public class ValidateBinarySearchTree {
     // 这个实现的精髓就在于 isLeft 和 isRgith上，
 //    	1. 根节点不是left，也不是right，所以刚传入时要写false，false
 //    	2. isRight 和 isLeft要不断往下面传，因为一个节点他可能是祖父节点的右子树也同时是父节点的左子树
+    /**
+     * 
+     * @param root
+     * @param isLeft 表示当前root是否某祖先节点的左子树
+     * @param isRight 表示当前root是否某祖先节点的右子树
+     * @param lmax 表示当前root作为左子树时，其不能超过的值
+     * @param rmin 表示当前root左右右子数时，其不能小于的值
+     * @return
+     */
     private boolean isValidBST(TreeNode root, boolean isLeft, boolean isRight, int lmax, int rmin) {
     	if(root == null)
     		return true;

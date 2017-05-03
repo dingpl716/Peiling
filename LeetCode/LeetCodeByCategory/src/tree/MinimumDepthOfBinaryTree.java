@@ -37,9 +37,9 @@ public class MinimumDepthOfBinaryTree {
     	}
     }
     
-//    public int minDepth(TreeNode root) {
-//    	if(root == null)
-//    		return 0;
-//    	return Math.min(minDepth(root.left), minDepth(root.right)) + 1;
-//    }
+    public int minDepth3(TreeNode root) {
+    	if(root == null)
+    		return 0;
+    	return Math.min(minDepth3(root.left), minDepth3(root.right)) + 1;
+    }
 }
