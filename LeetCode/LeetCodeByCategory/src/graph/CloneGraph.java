@@ -51,8 +51,9 @@ public class CloneGraph {
     	// 在这里面的oldNode，都是已经被克隆了，或者说是被new过了，但是他们的边edge可能还没有,也就是邻居可能还没有
     	Map<UndirectedGraphNode, UndirectedGraphNode> map 
     	= new HashMap<UndirectedGraphNode, UndirectedGraphNode>();
+    	
     	// nodes need to be cloned
-    	// 这个queue里面也都装的是等待被克隆边的node
+    	// 这个queue里面也都装的是边还没有被克隆边的node
     	Queue<UndirectedGraphNode> queue = new LinkedList<UndirectedGraphNode>();
     	
     	// 克隆点

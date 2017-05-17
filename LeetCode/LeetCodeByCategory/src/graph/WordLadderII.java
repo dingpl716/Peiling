@@ -10,6 +10,28 @@ import java.util.Queue;
 
 import definition.Word2Word;
 
+//	Given two words (beginWord and endWord), and a dictionary's word list, find all shortest transformation sequence(s) from beginWord to endWord, such that:
+//	
+//	Only one letter can be changed at a time
+//	Each transformed word must exist in the word list. Note that beginWord is not a transformed word.
+//	For example,
+//	
+//	Given:
+//	beginWord = "hit"
+//	endWord = "cog"
+//	wordList = ["hot","dot","dog","lot","log","cog"]
+//	Return
+//	  [
+//	    ["hit","hot","dot","dog","cog"],
+//	    ["hit","hot","lot","log","cog"]
+//	  ]
+//	Note:
+//	Return an empty list if there is no such transformation sequence.
+//	All words have the same length.
+//	All words contain only lowercase alphabetic characters.
+//	You may assume no duplicates in the word list.
+//	You may assume beginWord and endWord are non-empty and are not the same.
+
 
 //同样用BFS，在达到end时，不忙return，而是遍历完这一层。因为在这一层上的
 //所有单词都是一条可能的通路。
@@ -78,7 +100,6 @@ public class WordLadderII {
         		metEnd = jumpOneStep(q2, q1, end, met, dict, endPoints);
         	}
         }
-        
         
     	return backTrack(endPoints);
     }
