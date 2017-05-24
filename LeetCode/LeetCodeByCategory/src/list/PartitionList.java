@@ -18,87 +18,53 @@ import definition.ListNode;
 
 // 这道题最简便的方法，是给这个list再加上一个头结点preStart，然后返回preStart.next
 public class PartitionList {
-    public ListNode partition1(ListNode head, int x) {
-        if(head == null)
-            return null;
-        
-        ListNode begin = head;
-        ListNode smaller = head.next;
-        ListNode last = head;
-        if(begin.val >= x) {  // the first node >= x
-            while(smaller != null && smaller.val >= x) {
-                smaller = smaller.next;
-                last = last.next;
-            }
-            if(smaller == null)  // all elements >= x
-                return head;
-            
-            // here we will modifiy the head node
-            last.next = smaller.next;
-            smaller.next = begin;
-            head = smaller;
-            begin = smaller;
-            smaller = last.next;
-        }else {
-            ListNode preBegin = head;
-            begin = head.next;
-            while(begin!= null && begin.val < x) {
-                begin = begin.next;
-                preBegin = preBegin.next;
-            }
-            if(begin == null) // all elements < x
-                return head;
-            if(begin.next == null) // all nodes < x except last node
-                return head;
-            begin = preBegin;
-        }
-        
-        smaller = begin.next;
-        last = begin;
-        while(smaller !=null) {
-            if( smaller.val >= x) {
-                smaller = smaller.next;
-                last = last.next;
-                continue;
-            }
-            last.next = smaller.next;
-            smaller.next = begin.next;
-            begin.next = smaller;
-            begin = begin.next;
-            smaller = last.next;
-        }
-        
-        return head;
-    }
-    
-    public ListNode partition2(ListNode head, int x) {
-    	if(head == null)
+	
+	/**
+	 * 让小于x的点在大于等于x的点的前面
+	 * @param head
+	 * @param x
+	 * @return
+	 */
+    public ListNode partition(ListNode head, int x) {
+    	if (head == null){
     		return null;
-    	// 增加一个头结点
-    	ListNode preStart = new ListNode(Integer.MIN_VALUE);
-    	preStart.next = head;
+    	}
     	
-    	ListNode begin = preStart;
-    	while(begin.next != null && begin.next.val < x)
-    		begin = begin.next;
+    	ListNode beforeHead = new ListNode();
+    	beforeHead.next = head;
     	
-    	ListNode smaller = begin.next;
-    	ListNode last = begin;
-    	while(smaller != null) {
-    		if(smaller.val >= x) {
-    			smaller = smaller.next;
-    			last = last.next;
+    	// 从左往右，找到第一个破坏顺序的点，用A来记录他的前节点
+    	ListNode A = beforeHead;
+    	while(A.next != null && A.next.val < x){
+    		A = A.next;
+    	}
+    	
+    	// beforeB的下一个永远是B
+    	ListNode beforeB = A;
+    	ListNode B = beforeB.next;
+    	
+    	while(B != null){
+    		// 找到A以后，第一个小于x的点，记为B
+    		// 此时A到B之间的点（不包括A,B）全大于x
+    		// 接下来我们要整体移动这一段
+    		if (B.val >= x){
+    			beforeB = beforeB.next;
+    			B = B.next;
     			continue;
     		}
     		
-    		last.next = smaller.next;
-    		smaller.next = begin.next;
-    		begin.next = smaller;
-    		begin = begin.next;
-    		smaller = last.next;
+    		// 此时的list是这样的.....A -> xxxxx -> beforeB -> B -> .....
+    		// 需要把它变成这样的 .....A -> B -> xxxxx -> beforeB -> .....
+    		beforeB.next = B.next;
+			B.next = A.next;
+    		A.next = B;
+    		
+    		// 更新A的位置，保证A的下一个节点就大于x
+    		// 将B移动到beforeB的下一个
+    		A = B;
+    		B = beforeB.next;
     	}
     	
-    	return preStart.next;
+    	return beforeHead.next;
     }
-    
 }
