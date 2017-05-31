@@ -30,6 +30,8 @@ public class JumpGame {
     		return true;
     	if(A[0] == 0)
     		return false;
+    	
+    	// The furthest we can jump
     	int maxCover = 0;
     	for(int i=0; i<=maxCover && i<A.length; ++i){
     		if(A[i] + i > maxCover)

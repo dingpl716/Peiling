@@ -59,6 +59,15 @@ public class MedianOfTwoSortedArrays {
     	}
     }
     
+    /**
+     * 从A的start到end里面，找到第k个元素。
+     * @param A
+     * @param start
+     * @param end
+     * @param B
+     * @param k
+     * @return
+     */
     // search k th element in [start, end] of A
     private double findKthNumberTwoSortedArrays(int A[], int start, int end, 
     		int[] B, int k) {

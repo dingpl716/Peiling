@@ -40,13 +40,20 @@ public class InsertInterval {
         int posStart = inTheInterval(intervals.get(startIndex), newInterval.start);
         int posEnd = inTheInterval(intervals.get(endIndex), newInterval.end);
         if(startIndex == endIndex) {
+        	// 整个new interval都在左边
         	if(posStart < 0 && posEnd < 0)
         		return insert(intervals, startIndex, newInterval);
+
+        	// 
         	else if(posStart > 0 && posEnd > 0) {
         		intervals.add(newInterval);
         		return intervals;
+        		
+    		// 整个new interval都被包含了
         	}else if(posStart == 0 && posEnd == 0)
         		return intervals;
+        	
+        	// new internval 包含了另外的一个interval
         	 else if(posStart < 0 && posEnd > 0) {
         		 intervals.remove(0);
         		 intervals.add(newInterval);

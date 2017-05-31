@@ -47,4 +47,11 @@ public class LargestRectangleInHistogram {
       
       return sum;
     }
+    
+    public static void main(String[] args){
+    	int[] height = new int[]{2,3,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+    	LargestRectangleInHistogram c = new LargestRectangleInHistogram();
+    	int result = c.largestRectangleArea(height);
+    	System.out.println(result);
+    }
 }

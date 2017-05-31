@@ -1,7 +1,50 @@
 package string_array;
 import java.util.ArrayList;
 
-
+//	The gray code is a binary numeral system where two successive values differ in only one bit.
+//	
+//	Given a non-negative integer n representing the total number of bits in the code, print the sequence of gray code. A gray code sequence must begin with 0.
+//	
+//	For example, given n = 2, return [0,1,3,2]. Its gray code sequence is:
+//	
+//	00 - 0
+//	01 - 1
+//	11 - 3
+//	10 - 2
+//	Note:
+//	For a given n, a gray code sequence is not uniquely defined.
+//	
+//	For example, [0,2,3,1] is also a valid gray code sequence according to the above definition.
+/**
+ * 基本思路：
+ * 1. 从n=1，一点一点一点的网上组装gray codes。 比如，先是n=1，再是n=2，再是n=3.。。。
+ * 2. 每次从n-1升级到n的时候做以下事情：
+ * 		1) 反向复制现有的gray codes
+ * 		2) 给前半部分的每一个code尾部添加0，给后半部分的每一个添加1
+ * 
+ * 例子:
+ *  n = 1:
+ *  0
+ *  1
+ *  
+ *  n = 2:
+ *  0     00
+ *  1  -> 10
+ *  1  -> 11
+ *  0     01
+ *  
+ *  n = 3:
+ *  00       000
+ *  10       100
+ *  11       110
+ *  01  ->   010
+ *  01  ->   011
+ *  11       111
+ *  10       101
+ *  00       001
+ * @author Dingp
+ *
+ */
 public class GrayCode {
 
 	public ArrayList<Integer> grayCode(int n) {
@@ -48,6 +91,11 @@ public class GrayCode {
 		return codes;
 	}
 	
+	/**
+	 * 
+	 * @param grayCodes
+	 * @return
+	 */
 	private ArrayList<StringBuffer> getNewGrayCodes(ArrayList<StringBuffer> grayCodes) {
 		int size = grayCodes.size();
 		for(int i=size-1; i>=0; --i) {
