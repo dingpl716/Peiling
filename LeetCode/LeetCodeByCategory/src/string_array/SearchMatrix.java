@@ -183,4 +183,52 @@ public class SearchMatrix {
     	
     	return -1;
     }
+
+    public boolean searchMatrix3(int[][] matrix, int target) {
+        if(matrix == null)
+            return false;
+        
+        int rowNum = matrix.length;
+        if(rowNum == 0)
+            return false;
+        int colNum = matrix[0].length;
+        if(colNum == 0)
+            return false;
+        
+        int left = 0;
+        int right = rowNum * colNum - 1;
+        
+        while(left <= right) {
+        	int middle = (left + right) / 2;
+        	int[] indexes = getTwoDimensionIndexes(matrix, middle);
+        	int row = indexes[0];
+        	int col = indexes[1];
+        	if (matrix[row][col] == target){
+        		return true;
+        	} 
+        	else if (matrix[row][col] < target){
+        		left = middle;
+        	}
+        	else {
+        		right = middle;
+        	}
+        }
+        
+        return false;
+    }
+    
+    private int[] getTwoDimensionIndexes(int[][] matrix, int index){
+    	return new int[]{index/matrix[0].length, index%matrix[0].length};
+    }
+    
+    /**
+     * 
+     * @param matrix 一个m*n的二维数组
+     * @param row
+     * @param col
+     * @return [0, m*n-1];
+     */
+    private int getOneDimensionIndex(int[][] matrix, int row, int col){
+    	return row * matrix[0].length + col;
+    }
 }

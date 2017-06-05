@@ -54,12 +54,16 @@ public class MinimumWindowSubstring {
     	if(T == null || T.length() == 0)
     		return "";
     	Queue<Integer> queue = new LinkedList<Integer>();
+    	
     	// char -> 实际出现的次数, 应该出现的次数
     	Map<Character, int[]> window = initWindow(T);
+    	
     	// 如果实际出现的次数>=应该出现的次数，那么就是一个validChar
     	int validCharNumber = 0;
     	int start;
     	String result = "";
+    	
+    	// 找到第一个在T中出现的字符
     	for(start=0; start<S.length(); ++start) {
     		if(window.containsKey(S.charAt(start)))
     			break;
@@ -80,6 +84,8 @@ public class MinimumWindowSubstring {
     		}
     		
     		// repeatedly shrink [start, i] by increasing start
+    		// 这里移动start是为了保证上诉条件1，确保window的第一个字符的实际出现次数
+    		// 一定不大于需要的次数
     		int[] startValues = window.get(S.charAt(start));
     		while(startValues[0] > startValues[1]) {
     			startValues[0]--;
@@ -120,4 +126,11 @@ public class MinimumWindowSubstring {
 		return window;
 	}
 	
+	public static void main(String[] args){
+		String S = "ADOBECODEBANC";
+		String T = "ABC";
+		
+		MinimumWindowSubstring m = new MinimumWindowSubstring();
+		System.out.println(m.minWindow(S, T));
+	}
 }

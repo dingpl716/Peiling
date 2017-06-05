@@ -24,7 +24,7 @@ import definition.TreeNode;
 public class BinaryTreePostorderTraversal {
 	
 	/**
-	 * 下将自己压栈， 然后分别压入右节点、左节点
+	 * 先将自己压栈， 然后分别压入右节点、左节点
 	 * 如果没有左右子节点，那么就输出
 	 * 如果已经压过了，也输出
 	 * @param root
