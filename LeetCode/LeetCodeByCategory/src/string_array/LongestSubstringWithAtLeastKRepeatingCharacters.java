@@ -32,7 +32,7 @@ import java.util.Map.Entry;
  * 当i and/or j指向一个不大于k的char时，i++ and/or j--
  * 当i与j都指向一个满足条件的char时，（但此时i到j并不满足条件）做以下事情：
  * 如果i像右移动m步到达第一个不满足条件的char，j像左移动n步到达第一个不满足条件的char，如果m<n移动i，反之移动j
- * 如果m=n，同时移动i和j。此举是为了尽可能少的排除满足条件的char
+ * 此举是为了尽可能少的排除满足条件的char
  * 
  * 
  * @author Dingp
