@@ -54,7 +54,7 @@ public class KthLargestElementInAnArray {
 	/**
 	 * 对nums[left,right]的范围做partition,并且返回枢纽的index
 	 * 基本步骤:
-	 * 1.先从left，right已经(left+right)/2中选取中间大小的数作为pivot
+	 * 1.先从left，right以及(left+right)/2中选取中间大小的数作为pivot
 	 * 2.然后swap这三个数，确保left <= middle <= right;
 	 * 3.然后把pivot和right-1交换，此时left+1到right-2的范围内是需要进行处理的
 	 * 4.处理这一部分，注意下面代码中是先++i/--j的
