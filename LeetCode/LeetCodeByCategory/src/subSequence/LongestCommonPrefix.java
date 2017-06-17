@@ -1,4 +1,4 @@
-package string_array;
+package subSequence;
 
 // 找出一组字符串中，他们共同的最长前缀
 

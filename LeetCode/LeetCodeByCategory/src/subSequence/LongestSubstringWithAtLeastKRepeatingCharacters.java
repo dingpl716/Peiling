@@ -1,4 +1,4 @@
-package string_array;
+package subSequence;
 
 import java.util.HashMap;
 import java.util.Map;
