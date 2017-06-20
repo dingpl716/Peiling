@@ -21,7 +21,7 @@ import definition.TreeNode;
 public class CountCompleteTreeNodes {
 	
     public int countNodes(TreeNode root) {
-        
+    	return 0;
     }
     
     /**
@@ -75,5 +75,7 @@ public class CountCompleteTreeNodes {
     	}else {
     		
     	}
+    	
+    	return 0;
     }
 }
