@@ -1,4 +1,4 @@
-package dfs;
+package graph;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -57,7 +57,7 @@ public class CourseSchedule {
     	// 指向当前要处理的课程
     	int i = -1;
     	
-    	while(coursesHaveBeenFinished.size() < numCourses - 1) {
+    	while(coursesHaveBeenFinished.size() < numCourses) {
     		++i;
     		
     		coursesToFinishQueue.add(i);
