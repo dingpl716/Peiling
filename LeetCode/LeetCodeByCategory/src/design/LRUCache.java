@@ -8,13 +8,15 @@ import java.util.Map;
 //	get(key) - Get the value (will always be positive) of the key 
 //	if the key exists in the cache, otherwise return -1.
 //	
-//	set(key, value) - Set or insert the value if the key is not 
+//	put(key, value) - Set or insert the value if the key is not 
 //	already present. When the cache reached its capacity, it should invalidate 
 //	the least recently used item before inserting a new item.
 
 public class LRUCache {
 	
-	// 一个双向链表，用来记录cache被使用的情况
+	// This is a circle doubly linked list
+	// to track the most recently used and the
+	// least recently used data.
 	private static class Node {
 		Node prev;
 		Node next;
@@ -29,10 +31,13 @@ public class LRUCache {
 		}
 	}
 	
-	// 这个是用来存放数据的地方
+	// The cache.
 	private Map<Integer, Node> cache;
-	// 这个是用来存放数据被使用的情况
-	// 最开始这个是一个空的，也就是没有任何cache被使用，
+	
+	// This is a circle doubly linked list.
+	// The head is the most recently used node.
+	// The head's next is the secondly recently used node.
+	// The head's prev is the least recently used node.
 	private Node head;
 	
 	private int capacity;
@@ -47,57 +52,65 @@ public class LRUCache {
     	if(cache.containsKey(key)) {
     		Node node = cache.get(key);
     		if(node != head) {
-	    		detach(node);
-	    		attach(node);
+	    		removeFromList(node);
+	    		setAsHead(node);
     		}
     		return node.value;
     	}else
     		return -1;
     }
     
-    public void set(int key, int value) {
+    public void put(int key, int value) {
     	if(cache.containsKey(key)) {
     		// update value
     		Node node = cache.get(key);
     		node.value = value;
     		if(node != head){
-    			detach(node);
-    			attach(node);
+    			removeFromList(node);
+    			setAsHead(node);
     		}
     	}else {
     		// add a new node
     		if(cache.size() < capacity) {
     			Node node = new Node(key, value);
     			cache.put(key, node);
-    			attach(node);
+    			setAsHead(node);
     		}else {
     			Node node = new Node(key, value);
     			cache.put(key, node);
     			cache.remove(head.prev.key);
-    			detach(head.prev);
-    			attach(node);
+    			
+    			// The head's prev is the least recently used node
+    			// so remove it from the list.
+    			removeFromList(head.prev);
+    			setAsHead(node);
     		}
     	}
     }
     
     // remove this node from the list
-    private void detach(Node node) {
-    	//如果这个node头尾都指向自己，那么说明整个cache里面就只有这么一个node
+    private void removeFromList(Node node) {
+    	//In this case there is only one node in the list
+    	//which is the node passed in.
     	if(node.next == node && node.prev == node) {
     		head = null;
     		return;
     	}
+    	
+    	// Let the prev node of this node directly point to next node of this node
     	if(node.prev != null)
     		node.prev.next = node.next;
+    	
+    	// Let the next node of this node directly point to prev node of this node.
     	if(node.next != null)
     		node.next.prev = node.prev;
     	node.next = null;
     	node.prev = null;	
     }
     
-    // 把这个node加到队头
-    private void attach(Node node) {
-    	// 如果head是null的话，那么说明现在整个cache都是空的
+    // Set the node as the head of the list.
+    private void setAsHead(Node node) {
+    	// when there isn't any node in the list.
     	if(head == null) {
     		head = node;
     		head.prev = head;
