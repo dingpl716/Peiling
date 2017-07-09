@@ -11,71 +11,53 @@ import definition.TreeNode;
 
 /**
  * 核心思想:
- * 对于一个完全二叉树而言，其最左边的层数一定大于等于最后边的层数，
- * 如果等于的话，那么是一个满二叉树，直接返回2^层数 - 1即可
- * 如果大于的话，那么我们知道第一个叶节点一定在右子树上，而且第一个页节点的兄弟节点就是最后一个非叶节点
- * 假设最后一个非叶节点是第k个节点的话，那么总节点是为2k 或者 2k+1 
+ * 完全二叉树有以下两个特性：
+ * 1. 最多可能有2^n - 1 个节点，n为高度
+ * 2. 左右子树也一定是完全二叉树
  * @author Dingp
  *
  */
 public class CountCompleteTreeNodes {
 	
     public int countNodes(TreeNode root) {
-    	return 0;
+    	if (root == null) {
+    		return 0;
+    	}
+    	
+    	int leftDepth = getLeftDepth(root);
+    	int rightDepth = getRightDepth(root);
+    	
+    	// 左右相等为满二叉树,节点数为2^n - 1
+    	if (leftDepth == rightDepth) {
+    		return (1 << leftDepth) - 1; 
+    	} else {
+    		// 左右子树分别也是完全二叉树，所以递归调用
+    		return countNodes(root.left) + countNodes(root.right) + 1;
+    	}
     }
     
     /**
-     * 
-     * @param father The father of root node.
-     * @param root The root node.
-     * @param rootLevel The level of root node.
-     * @param rootIndex The index of root node.
+     * 求出最左边路径的高度，包括父节点在内
+     * @param root
      * @return
      */
-    private int countNodes(TreeNode father, TreeNode root, int rootLevel, int rootIndex) {
-    	int leftChildrenLevel = getLeftChildrenLevel(root, rootLevel);
-    	int rightChildrenLevel = getRightChildrenLevel(root, rootLevel);
-    	
-    	// 遇到满二叉树了,那么总节点数等于他兄弟节点最右边的子孙节点的index数
-    	if (leftChildrenLevel == rightChildrenLevel) {
-    		return -1;
+    private int getLeftDepth(TreeNode root) {
+    	int depth = 0;
+    	while (root != null) {
+    		root = root.left;
+    		++depth;
     	}
     	
-    	// 如果左右子树的level不相等的话，那么右边一定小于左边
-    	else {
-    		return countNodes(root, root.right, rootLevel + 1, rootIndex * 2 + 1);
-    	}
+    	return depth;
     }
     
-    private int getLeftChildrenLevel(TreeNode root, int fatherLevel){
-    	if (root == null){
-    		return fatherLevel;
-    	}
-    	else {
-    		return getLeftChildrenLevel(root.left, fatherLevel + 1);
-    	}
-    }
-    
-    private int getRightChildrenLevel(TreeNode root, int fatherLevel){
-    	if (root == null){
-    		return fatherLevel;
-    	}
-    	else {
-    		return getRightChildrenLevel(root.right, fatherLevel + 1);
-    	}
-    }
-    
-    private int getMostRightChildIndex(TreeNode root, int rootIndex){
-    	if (root == null){
-    		return rootIndex;
+    private int getRightDepth(TreeNode root) {
+    	int depth = 0;
+    	while (root != null) {
+    		root = root.right;
+    		++depth;
     	}
     	
-    	if (root.right != null){
-    		return getMostRightChildIndex(root.right, 2 * rootIndex + 1);
-    	}else {
-    		
-    	}
-    	
-    	return 0;
+    	return depth;
     }
 }
