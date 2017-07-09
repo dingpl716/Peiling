@@ -11,30 +11,16 @@ import java.util.Stack;
 //	这个解法的时间复杂度是On^2
 //	
 //	下面的这个解法的巧妙就在于，用一个堆栈记录下了之前的比我小的长方形，
-//	比如，栈顶元素是x，那么栈里面剩下的元素都大于x，如果此时遇到了y，x>y，
+//	比如，栈顶元素是x，那么栈里面剩下的元素都小于x，如果此时遇到了y，y<x，
 //	那么这个时候就是应该要计算以x为中心，能获取到的最大面积是多少的时候了。
 //	x,下面的那个元素不一定紧挨着x，但是肯定是在左边且第一个小于x的，姑且
-//	记为z，这个z就是要纳入计算范围的左边界，而此时的y也不一定紧挨着x，但是
-//	一定是在右边第一个小于x的，也就是右边界。最后的就是右边界 - 左边界再
+//	记为z，这个z就是要计算范围的左边界且为exclusive，而此时的y也不一定紧挨着x，但是
+//	一定是在右边第一个小于x的，也就是右边界,同样也是exclusive。最后的就是右边界 - 左边界再
 //	乘以x了
 
-/**
- * 用一个递减的栈来存储各元素，栈顶元素最小
- * 每一次我们都计算以这个栈顶元素为中心，也就是长方形的高，
- * 的长方形的面积。我们需要往左右两边探，找到第一个大于它的元素。
- * 设栈顶此时为 top， 栈里面的所有其他元素都大于top，
- * 如果此时的元素current小于top，那么压入current，
- * 如果此时的元素current大于top，此时就应该计算以top为高的长方形面积了
- * 而这个面积等于 top * (current - previous)， previous为top下面的元素
- * @author Dingp
- *
- */
+
 public class LargestRectangleInHistogram {
 	
-//	维护一个递增的栈，每次比较栈顶与当前元素。
-//	如果当前元素大于栈顶元素，则入站，
-//	否则合并现有栈，直至栈顶元素小于当前元素。
-//	结尾入站元素0，重复合并一次。
     public int largestRectangleArea(int[] height) {
       int[] newHeight = new int[height.length+1];
       for(int i=0; i<height.length; ++i){
@@ -60,7 +46,8 @@ public class LargestRectangleInHistogram {
     }
     
     public static void main(String[] args){
-    	int[] height = new int[]{2,3,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+//    	int[] height = new int[]{2,3,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+    	int[] height = new int[]{2, 1, 5, 6, 2, 3};
     	LargestRectangleInHistogram c = new LargestRectangleInHistogram();
     	int result = c.largestRectangleArea(height);
     	System.out.println(result);
