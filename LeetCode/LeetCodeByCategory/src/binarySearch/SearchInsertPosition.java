@@ -1,4 +1,4 @@
-package string_array;
+package binarySearch;
 //	Given a sorted array and a target value, return the 
 //	index if the target is found. If not, return the 
 //	index where it would be if it were inserted in order.
@@ -6,10 +6,10 @@ package string_array;
 //	You may assume no duplicates in the array.
 //	
 //	Here are few examples.
-//	[1,3,5,6], 5 ¡ú 2
-//	[1,3,5,6], 2 ¡ú 1
-//	[1,3,5,6], 7 ¡ú 4
-//	[1,3,5,6], 0 ¡ú 0
+//	[1,3,5,6], 5 ï¿½ï¿½ 2
+//	[1,3,5,6], 2 ï¿½ï¿½ 1
+//	[1,3,5,6], 7 ï¿½ï¿½ 4
+//	[1,3,5,6], 0 ï¿½ï¿½ 0
 
 public class SearchInsertPosition {
 	// if find the target in the array, then return the index

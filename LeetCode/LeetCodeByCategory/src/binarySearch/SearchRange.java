@@ -1,4 +1,4 @@
-package string_array;
+package binarySearch;
 
 public class SearchRange {
 	

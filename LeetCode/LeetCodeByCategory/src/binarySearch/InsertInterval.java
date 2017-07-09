@@ -1,4 +1,4 @@
-package string_array;
+package binarySearch;
 import java.util.ArrayList;
 
 import definition.Interval;

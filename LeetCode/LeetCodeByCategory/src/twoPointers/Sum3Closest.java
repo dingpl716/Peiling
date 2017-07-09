@@ -1,4 +1,4 @@
-package string_array;
+package twoPointers;
 import java.util.Arrays;
 
 //	连个指针，left，right，
