@@ -19,31 +19,31 @@ import definition.TreeNode;
 public class BinaryTreeRightSideView {
 	
 	public List<Integer> rightSideView(TreeNode root) {
-		List<Integer> integers = new ArrayList<Integer>();
+		List<Integer> results = new ArrayList<Integer>();
 		
 		if (root != null) {
-			dfs(root, integers, 1);
+			dfs(root, results, 1);
 		}
 		
-		return integers;
+		return results;
     }
 	
 	/**
 	 * 当currentLevel大于integers的size时我们把root的val加入到integers里面，然后优先遍历右子书，接着左子树。
 	 * @param root
-	 * @param integers
+	 * @param results
 	 * @param currentLevel
 	 */
-	private void dfs(TreeNode root, List<Integer> integers, int currentLevel) {
+	private void dfs(TreeNode root, List<Integer> results, int currentLevel) {
 		if (root == null) {
 			return;
 		}
 
-		if (currentLevel > integers.size()){
-			integers.add(root.val);
+		if (currentLevel > results.size()){
+			results.add(root.val);
 		}
 		
-		dfs(root.right, integers, currentLevel + 1);
-		dfs(root.left, integers, currentLevel + 1);
+		dfs(root.right, results, currentLevel + 1);
+		dfs(root.left, results, currentLevel + 1);
 	}
 }
