@@ -114,7 +114,7 @@ public class RemoveInvalidParentheses {
 //		String s1 = "()())()";
 		String s1 = ")(n";
 		List<String> results = instance.removeInvalidParentheses(s1);
-		Util.PrintListOfString(results);
+		Util.PrintList(results);
 	}
 
 }

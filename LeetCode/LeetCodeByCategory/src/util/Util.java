@@ -5,10 +5,10 @@ import java.util.function.Consumer;
 
 public class Util {
 	
-	public static void PrintListOfString(List<String> strings){
+	public static void PrintList(List list){
 		
-		for(int i = 0; i<strings.size(); ++i){
-			System.out.println(strings.get(i));
+		for(int i = 0; i<list.size(); ++i){
+			System.out.println(list.get(i));
 			System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		}
 	}

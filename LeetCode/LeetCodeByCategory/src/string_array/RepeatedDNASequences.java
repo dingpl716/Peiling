@@ -57,6 +57,6 @@ public class RepeatedDNASequences {
     public static void main(String[] args){
     	RepeatedDNASequences r = new RepeatedDNASequences();
     	List<String> results = r.findRepeatedDnaSequences("AAAAAAAAAAA");
-    	Util.PrintListOfString(results);
+    	Util.PrintList(results);
     }
 }
