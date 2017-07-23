@@ -39,6 +39,7 @@ public class NQueens {
     	}
     	return board;
     }
+    
     /**
      * place the queen on rowNum 
      * 也是一个dfs算法，其实只要是递归，就都是dfs
@@ -67,52 +68,6 @@ public class NQueens {
     		}
     	}
     	
-    }
-    
-    /**
-     * Check if we can put the queen on [ rowNum, colNum]
-     * We are going to check the entire rowNum and colNum
-     * and two diagnoals  
-     * @param rowNum
-     * @param colNum
-     * @return
-     */
-    private boolean canPutOn2(String[] board,int n, int rowNum, int colNum) {
-    	// check row
-    	for(int i=0; i<n; ++i) {
-    		if(board[rowNum].charAt(i) == 'Q')
-    			return false;
-    	}
-    	
-    	// check col
-    	for(int i=0; i<rowNum; ++i) {
-    		if(board[i].charAt(colNum) == 'Q')
-    			return false;
-    	}
-    	
-    	// check diag left-up to right-down
-    	for(int i=rowNum+1, j=colNum+1; i<n&&j<n; ++i, ++j) {
-			if(board[i].charAt(j) == 'Q')
-				return false;
-    	}
-    	// check diag  right-down to left-up
-    	for(int i=rowNum-1, j=colNum-1; i>=0&&j>=0; --i, --j) {
-			if(board[i].charAt(j) == 'Q')
-				return false;
-    	}
-    	
-    	// check dia left-down to right-up
-    	for(int i=rowNum-1, j=colNum+1; i>=0 && j<0; --i, ++j) {
-			if(board[i].charAt(j) == 'Q')
-				return false;
-    	}
-    	
-    	for(int i=rowNum+1,j=colNum-1; i<n && j>=0; ++i, --j) {
-			if(board[i].charAt(j) == 'Q')
-				return false;
-    	}
-    	
-    	return true;
     }
     
     /**

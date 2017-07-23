@@ -1,7 +1,10 @@
 package dfs;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import util.Util;
 
 
 public class CombinationsAndPermutations {
@@ -22,13 +25,13 @@ public class CombinationsAndPermutations {
  * @author Peiling
  *
  */
-    public ArrayList<ArrayList<Integer>> combine(int n, int k) {
-        ArrayList<ArrayList<Integer>> cb = new ArrayList<ArrayList<Integer>>();
-        ArrayList<Integer> buff = new ArrayList<Integer>();
+    public List<List<Integer>> combination(int n, int k) {
+    	List<List<Integer>> cb = new ArrayList<List<Integer>>();
+        List<Integer> buff = new ArrayList<Integer>();
         if(n * k == 0)
             return cb;
         
-        chooseCom(n, k, 0, 0, cb, buff);
+        dfsCombination(n, k, 0, cb, buff);
         return cb;
     }
     
@@ -37,27 +40,28 @@ public class CombinationsAndPermutations {
      * @param n
      * @param k
      * @param preLevelStart 表示上一次选的那个数是从第几开始的
-     * @param level， 表示选第几个数 
      * @param results
      * @param buff
      */
-    private void chooseCom(int n, int k, int preLevelStart, int level,
-                    ArrayList<ArrayList<Integer>> results,
-                    ArrayList<Integer> buff) {
-        if(level > k)
-            return;
-        if(level == k) {
-            ArrayList<Integer> cmb = (ArrayList<Integer>)buff.clone();
-            results.add(cmb);
-        }
+    private void dfsCombination(int n, int k, int preLevleStart,
+    		List<List<Integer>> results,
+            List<Integer> buff) {
+    	
+    	if (buff.size() == k){
+    		results.add(new ArrayList<Integer>(buff));
+    		return;
+    	}
+    	
         // 因为是组合 所以只管看后面的数，不用管前面的数了，比如在1,2,3,4,5,6,7里面
         // 如果这次我选了3，那么下一个数就只能从4开始选了，并且还必须给后面
         // 的数流出足够多的数来，比如一共选3个数，我第二个数就只能选到6，不能选7了
-        for(int i=preLevelStart+1; i<=n-k+1+level; ++i) {
-            buff.add(i);
-            chooseCom(n, k, i, level+1, results, buff);
-            buff.remove(buff.size()-1);
-        }
+    	// k - buff.size(); 还需要选的数
+    	// n - i + 1 剩下的数
+    	for (int i = preLevleStart + 1; n - i + 1>= k - buff.size(); ++i) {
+    		buff.add(i);
+    		dfsCombination(n, k, i, results, buff);
+    		buff.remove(buff.size() - 1);
+    	}
     }
     
     /**
@@ -94,5 +98,12 @@ public class CombinationsAndPermutations {
     		buffer.remove(buffer.size()-1);
     		had.remove(i);
     	}
+    }
+    
+    public static void main(String[] args) {
+    	CombinationsAndPermutations c = new CombinationsAndPermutations();
+    	List<List<Integer>> comb = c.combination(4, 2);
+
+    	Util.printListOfList(comb);
     }
 }

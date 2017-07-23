@@ -20,6 +20,35 @@ import java.util.Arrays;
 //	 []
 //	]
 public class Subsets {
+    
+    // dfs
+    // 用一个buffer来存目前的状况
+    // 任何时候都可以把这个buffer加入的result里面
+    // 用一个start来标目前的情况，只要不超过数组长度，我就可以往buffer里面加东西
+    public ArrayList<ArrayList<Integer>> subsets(int[] S) {
+    	ArrayList<Integer> buffer = new ArrayList<Integer>();
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        Arrays.sort(S);
+        dfs(S, 0, buffer, result);
+    	return result;
+    }
+    
+    private void dfs(int[] S, int start, ArrayList<Integer> buffer, ArrayList<ArrayList<Integer>> result) {
+    	result.add(new ArrayList<Integer>(buffer));
+    	if(start == S.length)
+    		return;
+    	for(int i=start; i<S.length; ++i) {
+    		buffer.add(S[i]);
+    		dfs(S, i+1, buffer, result);
+    		buffer.remove(buffer.size()-1);
+    	}
+    }
+    
+	/**
+	 * 不好的方法
+	 * @param S
+	 * @return
+	 */
     public ArrayList<ArrayList<Integer>> subsets2(int[] S) {
         ArrayList<Integer> empty = new ArrayList<Integer>();
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
@@ -68,27 +97,5 @@ public class Subsets {
             }
         }
     }
-    
-    // dfs
-    // 用一个buffer来存目前的状况
-    // 任何时候都可以把这个buffer加入的result里面
-    // 用一个start来标目前的情况，只要不超过数组长度，我就可以往buffer里面加东西
-    public ArrayList<ArrayList<Integer>> subsets(int[] S) {
-    	ArrayList<Integer> buffer = new ArrayList<Integer>();
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-        Arrays.sort(S);
-        dfs(S, 0, buffer, result);
-    	return result;
-    }
-    
-    private void dfs(int[] S, int start, ArrayList<Integer> buffer, ArrayList<ArrayList<Integer>> result) {
-    	result.add(new ArrayList<Integer>(buffer));
-    	if(start == S.length)
-    		return;
-    	for(int i=start; i<S.length; ++i) {
-    		buffer.add(S[i]);
-    		dfs(S, i+1, buffer, result);
-    		buffer.remove(buffer.size()-1);
-    	}
-    }
+
 }

@@ -60,7 +60,8 @@ public class ScrambleString {
         	return true;
         else {
         	for(int i=1; i<s1.length(); ++i) {
-        		 //seporate s1 as [0,i - 1],[i, s1.size() - 1]
+        		//seporate s1 as [0,i - 1],[i, s1.size() - 1]
+        		// 把s1, s2 在i处切一刀
         		String s11 = s1.substring(0,i);
         		String s12 = s1.substring(i);
         		
@@ -69,6 +70,7 @@ public class ScrambleString {
     			if(isScramble(s11, s21) && isScramble(s12, s22))
     				return true;
         		
+    			// 还要尝试把s2在length - i处切一刀
         		s21 = s2.substring(s2.length() - i);
         		s22 = s2.substring(0, s2.length() - i);
     			if(isScramble(s11, s21) && isScramble(s12, s22))

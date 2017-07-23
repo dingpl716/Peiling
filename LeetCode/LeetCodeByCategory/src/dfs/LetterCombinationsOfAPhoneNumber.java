@@ -1,7 +1,10 @@
 package dfs;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import util.Util;
 
 //	Given a digit string, return all possible letter combinations that the number could represent.
 //	
@@ -34,22 +37,29 @@ public class LetterCombinationsOfAPhoneNumber {
         if(digits == null || digits.length() == 0)
         	return result;
         StringBuffer buffer = new StringBuffer();
-        letterCombinations(digits, 0, buffer, result);
+        letterCombinations(digits, buffer, result);
         return result;
     }
     
-    private void letterCombinations(String digits, int digitIndex, StringBuffer buffer, 
+    private void letterCombinations(String digits, StringBuffer buffer, 
     		ArrayList<String> result) {
     	
-    	if(digitIndex == digits.length()) {
+    	if(buffer.length() == digits.length()) {
     		result.add(buffer.toString());
     		return ;
     	}
-    	String[] letters = digit2Letter.get(digits.charAt(digitIndex));
+    	String[] letters = digit2Letter.get(digits.charAt(buffer.length()));
     	for(int i=0; i<letters.length; ++i) {
     		buffer.append(letters[i]);
-    		letterCombinations(digits, digitIndex+1, buffer, result);
+    		letterCombinations(digits, buffer, result);
     		buffer.deleteCharAt(buffer.length()-1);
     	}
+    }
+    
+    public static void main(String[] args) {
+    	LetterCombinationsOfAPhoneNumber l = new LetterCombinationsOfAPhoneNumber();
+    	String digits = "23";
+    	List<String> result = l.letterCombinations(digits);
+    	Util.printList(result);
     }
 }

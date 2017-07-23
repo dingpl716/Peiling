@@ -92,7 +92,7 @@ public class CombinationSumIV {
 	 * 
 	 * 设S[t]是当target是t的时候解法的数量，那么
 	 * S[t] = sum(S[k]) + T, 其中 0 < k < t
-	 *        S[k] = 0 if t - k 不在array里面
+	 * 	并且      S[k] = 0 if t - k 不在array里面
 	 *        T = 1, if t 在array里面，else 0 
 	 * S[0] = 0, 因为全是正数
 	 * S[1] = 1 if 1 is in the arry, other wise 0

@@ -1,7 +1,5 @@
 package dfs;
 
-import java.util.ArrayList;
-
 //	Given a positive integer n, find the least number of perfect square numbers 
 //	(for example, 1, 4, 9, 16, ...) which sum to n.
 //	
@@ -38,10 +36,15 @@ public class PerfectSquares {
     		result = Math.min(result, numberOfSquareRoots);
     		return ;
     	}
-    	
     	for (int i = initialSquareRoot; i >= 1; --i){
     		int square = (i * i);
     		
+    		/*
+    		 * 在这里n是我们这次递归需要处理的剩余部分, 
+    		 * 而initialSquareRoot只是最开始的，那个最大的square root
+    		 * 当n < square的时候我们不能直接就退出这一次循环了,
+    		 * 而是要继续往下试到1为止
+    		 */
     		if (n < square) {
     			continue;
     		}else {

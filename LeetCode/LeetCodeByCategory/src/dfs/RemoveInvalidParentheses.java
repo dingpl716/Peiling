@@ -16,7 +16,9 @@ import util.Util;
 //	")(" -> [""]
 
 public class RemoveInvalidParentheses {
-	// currentMaxLength,  当前results里面string的长度，这个算法会把所有符合合法的括号对都加入到结果集里面，而不是只加入最长的，所以我们需要筛选结果集
+	// currentMaxLength,  当前results里面string的长度，
+	// 这个算法会把所有合法的括号对都加入到结果集里面，
+	// 而不是只加入最长的，所以我们需要筛选结果集
 	int currentLength = 0;
 	
 	public List<String> removeInvalidParentheses(String s) {

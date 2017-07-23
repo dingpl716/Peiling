@@ -1,5 +1,6 @@
 package util;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -13,13 +14,31 @@ public class Util {
 		}
 	}
 	
-	public static void timmer(Consumer consumer){
+	public static <T> void printList(List<T> list) {
+		for (T t : list) {
+			System.out.println(t);
+		}
+		
+		System.out.println("++++++++++++++++++++++++++++++++++++++");
+	}
+	
+	public static <T> void printListOfList(List<List<T>> lists) {
+		for (List<T> list : lists) {
+    		StringBuilder sb = new StringBuilder();
+    		for (T t : list) {
+    			sb.append(t + ", ");
+    		}
+    		
+    		System.out.println(sb.toString());
+    	}
+	}
+	
+ 	public static void timmer(Consumer consumer){
 		long startTime = System.currentTimeMillis();
 		consumer.accept(null);
 		long endTime = System.currentTimeMillis();
 		System.out.println(endTime - startTime + "ms");
 	}
-	
 	
 	public static int[] countingSort(int[] nums){
 		if (nums == null || nums.length < 2) {
