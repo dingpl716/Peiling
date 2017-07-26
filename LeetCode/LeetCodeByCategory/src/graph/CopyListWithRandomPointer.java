@@ -48,4 +48,29 @@ public class CopyListWithRandomPointer {
     	return newHead;
     }
     
+    /******************************   DFS SOLUTION   ***************************/
+    public RandomListNode copyRandomListDFS(RandomListNode head) { 
+    	Map<RandomListNode, RandomListNode> copied = 
+    			new HashMap<RandomListNode, RandomListNode>();
+    	
+    	return dfs(head, copied);
+    }
+    
+    private RandomListNode dfs(RandomListNode head, Map<RandomListNode, RandomListNode> copied) {
+    	if (head == null) {
+    		return null;
+    	}
+    	
+    	if (copied.containsKey(head)) {
+    		return copied.get(head);
+    	}
+    	
+    	RandomListNode newHead = new RandomListNode(head.label);
+    	copied.put(head, newHead);
+    	
+    	newHead.next = dfs(head.next, copied);
+    	newHead.random = dfs(head.random, copied);
+    	
+    	return newHead;
+    }
 }

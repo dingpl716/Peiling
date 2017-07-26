@@ -1,6 +1,9 @@
 package trie;
 
+import java.util.LinkedList;
 import java.util.List;
+
+import definition.TrieNode;
 
 //	Given a 2D board and a list of words from the dictionary, find all words in the board.
 //	
@@ -32,6 +35,71 @@ import java.util.List;
 public class WordSearchII {
 
     public List<String> findWords(char[][] board, String[] words) {
-        return null;
+        TrieNode root = buildTrie(words);
+        List<String> results = new LinkedList<String>();
+        
+        if (board == null || board.length == 0) {
+        	return results;
+        }
+        
+        for (int i = 0; i < board.length; ++i){
+        	for (int j = 0; j < board[0].length; ++j) {
+        		dfs(board, i, j, root, results);
+        	}
+        }
+        
+        return results;
+    }
+    
+    /**
+     * 
+     * @param board
+     * @param x 纵坐标
+     * @param y 横坐标
+     * @param previousNode 上一层的前缀树节点，这个节点的子节点才是和x,y对应的字符.
+     * @param results
+     */
+    private void dfs(char[][] board,int x, int y, TrieNode previousNode, List<String> results) {
+    	char currentChar = board[x][y]; 
+    	if (currentChar == '.') {
+    		return;
+    	}
+    	
+    	if (!previousNode.children.containsKey(currentChar)) {
+    		return;
+    	}
+    	
+    	TrieNode currentNode = previousNode.children.get(currentChar);
+    	if (currentNode.isEndOfWord) {
+    		results.add(currentNode.value);
+    	}
+    	board[x][y] = '.';
+    	
+    	if (x > 0) {
+    		dfs(board, x - 1, y, currentNode, results);
+    	}
+    	
+    	if (x < board.length - 1) {
+    		dfs(board, x + 1, y, currentNode, results);
+    	}
+    	
+    	if (y > 0) {
+    		dfs(board, x, y - 1, currentNode, results);
+    	}
+    	
+    	if (y < board[0].length - 1) {
+    		dfs(board, x, y + 1, currentNode, results);
+    	}
+    	
+    	board[x][y] = currentChar;
+    }
+    
+    private TrieNode buildTrie(String[] words) {
+    	Trie trie = new Trie();
+    	for (String word : words) {
+    		trie.insert(word);
+    	}
+    	
+    	return trie.root;
     }
 }
