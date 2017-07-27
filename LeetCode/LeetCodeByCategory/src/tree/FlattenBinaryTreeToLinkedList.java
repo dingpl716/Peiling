@@ -50,13 +50,15 @@ public class FlattenBinaryTreeToLinkedList {
     		root.left = null;
     		return flattenAndGetLast(root.right);
     	}else {
-//    		TreeNode lastInRight = flattenAndGetLast(root.right);
     		TreeNode lastInLeft = flattenAndGetLast(root.left);
+    		TreeNode lastInRight = flattenAndGetLast(root.right);
+    		
     		lastInLeft.right = root.right;
     		lastInLeft.left = null;
     		root.right = root.left;
     		root.left = null;
-    		return flattenAndGetLast(root.right);
+    		
+    		return lastInRight;
     	}
     }
 }

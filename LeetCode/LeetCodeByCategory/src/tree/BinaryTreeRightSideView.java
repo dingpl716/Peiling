@@ -29,7 +29,7 @@ public class BinaryTreeRightSideView {
     }
 	
 	/**
-	 * 当currentLevel大于integers的size时我们把root的val加入到integers里面，然后优先遍历右子书，接着左子树。
+	 * 当currentLevel大于results的size时我们把root的val加入到results里面，然后优先遍历右子书，接着左子树。
 	 * @param root
 	 * @param results
 	 * @param currentLevel

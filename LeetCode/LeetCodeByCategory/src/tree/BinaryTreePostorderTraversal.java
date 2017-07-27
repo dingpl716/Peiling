@@ -26,7 +26,7 @@ public class BinaryTreePostorderTraversal {
 	/**
 	 * 先将自己压栈， 然后分别压入右节点、左节点
 	 * 如果没有左右子节点，那么就输出
-	 * 如果已经压过了，也输出
+	 * 如果已经push过它的child了，也输出
 	 * @param root
 	 * @return
 	 */
@@ -35,6 +35,8 @@ public class BinaryTreePostorderTraversal {
         // the same Solution instance will be reused for each test case.
         
         Stack<TreeNode> stack = new Stack<TreeNode>();
+        
+        // 这个set的实际意义是 一个node的child是否被push过
         Set<TreeNode> hasBeenPushed = new HashSet<TreeNode>();
         ArrayList<Integer> result = new ArrayList<Integer>();
         

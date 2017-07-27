@@ -42,6 +42,7 @@ public class BinaryTreeUpsideDown {
 		}
 		
 		inOrder(tree.left, tree);
+		
 		// 1. 左子树的最右后代变成newParent
 		TreeNode newParent = getRightMost(tree.left);
 		
