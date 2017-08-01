@@ -17,6 +17,7 @@ import definition.ListNode;
 // 3. 前面的节点全大于x，最后一个节点小于x，还有反过来的情况
 
 // 这道题最简便的方法，是给这个list再加上一个头结点preStart，然后返回preStart.next
+
 public class PartitionList {
 	
 	/**
@@ -33,36 +34,37 @@ public class PartitionList {
     	ListNode beforeHead = new ListNode();
     	beforeHead.next = head;
     	
-    	// 从左往右，找到第一个破坏顺序的点，用A来记录他的前节点
-    	ListNode A = beforeHead;
-    	while(A.next != null && A.next.val < x){
-    		A = A.next;
+    	// 从左往右，找到第一个破坏顺序的点，用lastSmall来记录他的前节点
+    	// lastSmall 是在list开头的小于x的那部分的最后一个点
+    	ListNode lastSmall = beforeHead;
+    	while(lastSmall.next != null && lastSmall.next.val < x){
+    		lastSmall = lastSmall.next;
     	}
     	
     	// beforeB的下一个永远是B
-    	ListNode beforeB = A;
-    	ListNode B = beforeB.next;
+    	ListNode beforeB = lastSmall;
+    	ListNode smallNodeToSwitch = beforeB.next;
     	
-    	while(B != null){
-    		// 找到A以后，第一个小于x的点，记为B
-    		// 此时A到B之间的点（不包括A,B）全大于x
-    		// 接下来我们要整体移动这一段
-    		if (B.val >= x){
+    	while(smallNodeToSwitch != null){
+    		// 找到lastSmall以后，第一个小于x的点，记为smallNodeToSwitch
+    		// 此时lastSmall到smallNodeToSwitch之间的点（不包括他们）全大于x
+    		// 接下来我们要把smallNodeToSwitch插入到lastSmall之后
+    		if (smallNodeToSwitch.val >= x){
     			beforeB = beforeB.next;
-    			B = B.next;
+    			smallNodeToSwitch = smallNodeToSwitch.next;
     			continue;
     		}
     		
-    		// 此时的list是这样的.....A -> xxxxx -> beforeB -> B -> .....
-    		// 需要把它变成这样的 .....A -> B -> xxxxx -> beforeB -> .....
-    		beforeB.next = B.next;
-			B.next = A.next;
-    		A.next = B;
+    		// 此时的list是这样的.....lastSmall -> big -> ... -> big -> beforeB -> smallNodeToSwitch -> .....
+    		// 需要把它变成这样的 .....lastSmall -> smallNodeToSwitch -> big -> ... -> big -> beforeB -> .....
+    		beforeB.next = smallNodeToSwitch.next;
+			smallNodeToSwitch.next = lastSmall.next;
+    		lastSmall.next = smallNodeToSwitch;
     		
-    		// 更新A的位置，保证A的下一个节点就大于x
-    		// 将B移动到beforeB的下一个
-    		A = B;
-    		B = beforeB.next;
+    		// 更新lastSmall的位置，保证lastSmall的下一个节点就大于x
+    		// 将smallNodeToSwitch移动到beforeB的下一个
+    		lastSmall = smallNodeToSwitch;
+    		smallNodeToSwitch = beforeB.next;
     	}
     	
     	return beforeHead.next;

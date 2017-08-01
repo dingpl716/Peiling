@@ -10,7 +10,7 @@ package list;
 //	
 //	Your function should return length = 2, and A is now [1,2].
 
-//	连个指针，left，right，一个k值，
+//	两个指针，left，right，一个k值，
 //	if right == left, right++, k++
 //	else, shift A[right, end] to the left
 public class RemoveDuplicatesFromSortedArray {
