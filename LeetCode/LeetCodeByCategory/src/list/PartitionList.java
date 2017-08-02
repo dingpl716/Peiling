@@ -55,11 +55,19 @@ public class PartitionList {
     			continue;
     		}
     		
+<<<<<<< HEAD
     		// 此时的list是这样的.....lastSmall -> big -> ... -> big -> beforeB -> smallNodeToSwitch -> .....
     		// 需要把它变成这样的 .....lastSmall -> smallNodeToSwitch -> big -> ... -> big -> beforeB -> .....
     		beforeB.next = smallNodeToSwitch.next;
 			smallNodeToSwitch.next = lastSmall.next;
     		lastSmall.next = smallNodeToSwitch;
+=======
+    		// 此时的list是这样的.....A -> XXXXXX -> beforeB -> B -> .....
+    		// 需要把它变成这样的 .....A -> B -> xxxxx -> beforeB -> .....
+    		beforeB.next = B.next;
+			B.next = A.next;
+    		A.next = B;
+>>>>>>> Solved common questions of Amazon and Facebook.
     		
     		// 更新lastSmall的位置，保证lastSmall的下一个节点就大于x
     		// 将smallNodeToSwitch移动到beforeB的下一个
