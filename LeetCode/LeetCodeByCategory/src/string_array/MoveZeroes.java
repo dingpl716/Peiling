@@ -43,11 +43,7 @@ public class MoveZeroes {
         }
         
         for (int i = 0; i < nums.length; ++i) {
-        	if (i <= nonZero) {
-        		continue;
-        	}
-        	
-        	if (nums[i] != 0) {
+        	if (i > nonZero && nums[i] != 0) {
         		nums[nonZero] = nums[i];
         		nums[i] = 0;
         		++nonZero;

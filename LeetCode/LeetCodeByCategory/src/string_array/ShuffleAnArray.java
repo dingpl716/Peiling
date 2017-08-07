@@ -1,5 +1,7 @@
 package string_array;
 
+import java.util.Random;
+
 //	Shuffle a set of numbers without duplicates.
 //	
 //	Example:
@@ -17,6 +19,12 @@ package string_array;
 //	
 //	// Returns the random shuffling of array [1,2,3].
 //	solution.shuffle();
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution obj = new Solution(nums);
+ * int[] param_1 = obj.reset();
+ * int[] param_2 = obj.shuffle();
+ */
 
 /**
  * Shuffle的核心思想
@@ -30,5 +38,34 @@ package string_array;
  *
  */
 public class ShuffleAnArray {
-
+    
+	private int[] copy = null;
+	
+	public ShuffleAnArray(int[] nums) {
+        copy = nums;
+    }
+    
+    /** Resets the array to its original configuration and return it. */
+    public int[] reset() {
+        return copy;
+    }
+    
+    /** Returns a random shuffling of the array. */
+    public int[] shuffle() {
+        int[] nums = copy.clone();
+        
+        Random r = new Random();
+        for (int i = 1; i < nums.length; ++i) {
+        	int j = r.nextInt(i + 1);
+        	swap(nums, i, j);
+        }
+        
+        return nums;
+    }
+    
+    private void swap(int[] nums, int i, int j) {
+    	int tmp = nums[i];
+    	nums[i] = nums[j];
+    	nums[j] = tmp;
+    }
 }
