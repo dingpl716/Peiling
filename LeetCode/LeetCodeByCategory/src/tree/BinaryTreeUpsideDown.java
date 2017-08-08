@@ -25,7 +25,7 @@ public class BinaryTreeUpsideDown {
 	// 1. 左子树的最右后代变成newParent
 	// 2. 自己，变成newParent的右子树
 	// 3. 现在的右child变成newParent的leftChild
-	public TreeNode binaryTreeUpsideDown(TreeNode tree){
+	public TreeNode upsideDownBinaryTree(TreeNode tree){
 		TreeNode result = getLeftMost(tree);
 		inOrder(tree, null);
 		return result;
@@ -69,6 +69,10 @@ public class BinaryTreeUpsideDown {
 	}
 	
 	private TreeNode getLeftMost(TreeNode node){
+		if (node == null) {
+            return null;
+        }
+		
 		TreeNode result = node;
 		while(result.left != null){
 			result = result.left;
