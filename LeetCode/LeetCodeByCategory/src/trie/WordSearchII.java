@@ -1,7 +1,10 @@
 package trie;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import definition.TrieNode;
 
@@ -36,10 +39,10 @@ public class WordSearchII {
 
     public List<String> findWords(char[][] board, String[] words) {
         TrieNode root = buildTrie(words);
-        List<String> results = new LinkedList<String>();
+        Set<String> results = new HashSet<String>();
         
         if (board == null || board.length == 0) {
-        	return results;
+        	return new ArrayList<String>();
         }
         
         for (int i = 0; i < board.length; ++i){
@@ -48,7 +51,16 @@ public class WordSearchII {
         	}
         }
         
-        return results;
+        return toList(results);
+    }
+    
+    private List<String> toList(Set<String> set) {
+    	LinkedList<String> result = new LinkedList<String>();
+    	for (String str : set) {
+    		result.add(str);
+    	}
+    	
+    	return result;
     }
     
     /**
@@ -59,7 +71,7 @@ public class WordSearchII {
      * @param previousNode 上一层的前缀树节点，这个节点的子节点才是和x,y对应的字符.
      * @param results
      */
-    private void dfs(char[][] board,int x, int y, TrieNode previousNode, List<String> results) {
+    private void dfs(char[][] board,int x, int y, TrieNode previousNode, Set<String> results) {
     	char currentChar = board[x][y]; 
     	if (currentChar == '.') {
     		return;

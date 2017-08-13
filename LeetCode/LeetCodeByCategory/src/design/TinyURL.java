@@ -84,6 +84,14 @@ package design;
  *  
  *  
  *  在空间上的Optimization: 回收short url
+ *  
+ *  回收short url是必要的，不然我们迟早有一天不能再产生任何新的short url。但是回收short url会为我们
+ *  带来问题，即short url的value space碎片化。比如我们从1开始分发short url，此时我们已经分发到100了。
+ *  然后这个时候我们需要将12,19,20,78等short url 进行回收。那么此时我们应该如何高效的重新利用这些被
+ *  回收了的short url呢？ 答案是维护一个available short url list，每当我们需要产生一个新的short url
+ *  时，我们先从这个list里面找看是否有可用的short url，如果有那么直接分配这个shor url即可，不行的话
+ *  我们再根据现在database里面的情况来新增一个。这个方法也被用在operating system里面来处理page fault
+ *  的问题。
  *  	
  * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  * 

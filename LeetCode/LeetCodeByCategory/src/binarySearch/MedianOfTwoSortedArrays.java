@@ -8,11 +8,11 @@ package binarySearch;
 public class MedianOfTwoSortedArrays {
 
     public double findMedianSortedArrays(int A[], int B[]) {
-    	if((A.length+B.length)%2 == 1)
-    		return findKthNumberTwoSortedArrays(A, 0, A.length-1, B, (A.length+B.length)/2);
+    	if(((A.length+B.length) & 1) == 1)
+    		return findKthNumberTwoSortedArrays2(A, 0, A.length-1, B, 0, B.length - 1, (A.length+B.length) / 2 + 1);
     	else
-    		return (findKthNumberTwoSortedArrays(A, 0, A.length-1, B, (A.length+B.length)/2-1) +
-    				findKthNumberTwoSortedArrays(A, 0, A.length-1, B, (A.length+B.length)/2))/2;
+    		return (findKthNumberTwoSortedArrays2(A, 0, A.length-1, B, 0, B.length - 1, (A.length+B.length) / 2) +
+    				findKthNumberTwoSortedArrays2(A, 0, A.length-1, B, 0, B.length - 1, (A.length+B.length) / 2 + 1))/2;
     }
     
     
@@ -24,37 +24,40 @@ public class MedianOfTwoSortedArrays {
 		If (m/2+n/2+1) < k && am/2 < bn/2 ,  drop Section 1
 		section 1, 3 小于待求的中位数，所以drop他们的时候要update k
 		section 2， 4大于这个中位数，所以drop他们的时候不用update k
+		
+		k is NOT 0 based, it is 1 based
      */
     private double findKthNumberTwoSortedArrays2(int A[], int start1, int end1, 
     		int[] B, int start2, int end2, int k) {
     	if(start1 > end1)
-    		return B[start2+k];
+    		return B[start2 + k - 1];
     	if(start2 > end2)
-    		return A[start1+k];
-    	if(k <= 0)
+    		return A[start1 + k - 1];
+    	if(k <= 1)
     		return Math.min(A[start1], B[start2]);
     	
     	// median of current A and B
-    	int ma = (end1+start1)/2;
-    	int mb = (end2+start2)/2;
-    	if(ma + mb > k) { 
-    		if(A[ma] >= B[mb]) 
-    			//drop section 2
-    			return findKthNumberTwoSortedArrays2(A, start1, ma-1, B, start2, end2, k);
-    		else
+    	int ma = (end1+start1)/2 - start1 + 1;
+    	int mb = (end2+start2)/2 - start2 + 1;
+    	
+    	if(B[start2 + mb - 1] >= A[start1 + ma - 1]) {
+    		if (ma + mb >= k) {
     			//drop section 4
-    			return findKthNumberTwoSortedArrays2(A, start1, end1, B, start2, mb-1, k);
-    	}else {
-    		if(A[ma] > B[mb]) {
-    			// the number of numbers that we are going to discard
-    			int discard = mb-start2+1;
-    			//drop section 3
-    			return findKthNumberTwoSortedArrays2(A, start1, end1, B, mb+1, end2, k-discard);
-    		}
-    		else{
-    			int discard = mb-start1+1;
+    			return findKthNumberTwoSortedArrays2(A, start1, end1, B, start2, start2 + mb - 2, k);
+    		} else {
+    			int discard = ma;
     			//drop section 1
-    			return findKthNumberTwoSortedArrays2(A, ma+1, end1, B, start2, end2, k-discard);
+    			return findKthNumberTwoSortedArrays2(A, start1+ma, end1, B, start2, end2, k-discard);
+    		} 
+    	} else {
+    		if (ma + mb >= k) {
+    			//drop section 2
+    			return findKthNumberTwoSortedArrays2(A, start1, start1+ma-2, B, start2, end2, k);
+    		} else {
+    			// the number of numbers that we are going to discard
+    			int discard = mb;
+    			//drop section 3
+    			return findKthNumberTwoSortedArrays2(A, start1, end1, B, start2+mb, end2, k-discard);
     		}
     	}
     }
@@ -107,5 +110,13 @@ public class MedianOfTwoSortedArrays {
     		else
     			return findKthNumberTwoSortedArrays(A, i+1, end, B, k);
     	}	
+    }
+
+    public static void main(String[] args) {
+    	MedianOfTwoSortedArrays m = new MedianOfTwoSortedArrays();
+    	int[] A = {1,2,3};
+    	int[] B = {4,5,6};
+    	
+    	System.out.println(m.findMedianSortedArrays(A, B));
     }
 }

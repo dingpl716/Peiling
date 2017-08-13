@@ -28,7 +28,7 @@ public class Trie {
 //		}
 //	}
     
-	TrieNode root = null;
+	public TrieNode root = null;
 	
 	/** Initialize your data structure here. */
     public Trie() {
