@@ -28,4 +28,37 @@ package dp;
  */
 public class MaximalSquare {
 
+    public int maximalSquare(char[][] matrix) {
+        if (matrix == null || matrix.length == 0) {
+        	return 0;
+        }
+        
+        int[][] P = new int[matrix.length][matrix[0].length];
+        int result = 0;
+        
+        for (int i = 0; i < matrix.length; ++i) {
+        	for (int j = 0; j < matrix[0].length; ++j) {
+        		if (matrix[i][j] == '0') {
+        			P[i][j] = 0;
+        		} else {
+        			if (i == 0 || j == 0) {
+        				P[i][j] = matrix[i][j] - '0';
+        			} else {
+        				int min = Math.min(P[i-1][j-1], P[i-1][j]);
+        				min = Math.min(min, P[i][j-1]);
+        				P[i][j] = min + 1;
+        			}
+        			
+        			result = Math.max(result, P[i][j]);
+        		}
+        	}
+        }
+        
+        return result * result;
+    }
+    
+    public static void main(String[] args) {
+    	MaximalSquare m = new MaximalSquare();
+    	
+    }
 }

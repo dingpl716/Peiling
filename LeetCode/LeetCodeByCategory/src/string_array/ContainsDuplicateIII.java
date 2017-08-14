@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
 
+import definition.TreeNode;
+
 //	Given an array of Longs, find out whether there are two distinct indices i and j 
 //	in the array such that the absolute difference between nums[i] and nums[j] 
 //	is at most t and the absolute difference between i and j is at most k.
@@ -51,9 +53,65 @@ import java.util.Set;
  *
  */
 public class ContainsDuplicateIII {
+	
+	/*********************************BST法 *****************************************/
+	
+	private static class BST{
+		
+		TreeNode root;
+		
+		private void insert(int val) {
+			
+		}
+		
+		private void remove(int val) {
+			
+		}
+		
+		private boolean searchRange(int leftBoundary, int rightBoundary) {
+			
+			TreeNode runner = root;
+			
+			while (runner != null) {
+				if (leftBoundary <= runner.val && runner.val <= rightBoundary) {
+					return true;
+				} else if (rightBoundary < runner.val) {
+					runner = runner.left;
+				} else {
+					runner = runner.right;
+				}
+			}
+			
+			return false;
+		}
+	}
+	
+	public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+		BST bst = new BST();
+		
+		for (int i = 0; i < nums.length; ++i) {
+			if (i > k) {
+				bst.remove(nums[i - k - 1]);
+			}
+			
+			int leftBoundary = nums[i] - t;
+			int rightBoundary = nums[i] + t;
+			
+			if (bst.searchRange(leftBoundary, rightBoundary)) {
+				return true;
+			}
+			
+			bst.insert(nums[i]);
+			
+		}
+		
+		return false;
+	}
+	
 
+	/*********************************最开始的方法，速度不够*****************************************/
 	// 这个方法速度不够，因为还是做了线性查找
-    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+    public boolean containsNearbyAlmostDuplicate2(int[] nums, int k, int t) {
 
     	PriorityQueue<Long> minHeap = new PriorityQueue<Long>();
         PriorityQueue<Long> maxHeap = new PriorityQueue<Long>(new Comparator<Long>(){
