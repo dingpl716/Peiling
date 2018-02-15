@@ -1,8 +1,13 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class TxHandler {
 
 	private UTXOPool pool = null;
+	private Map<byte[], Transaction> transPool = null;
 	
     /**
      * Creates a public ledger whose current UTXOPool (collection of unspent transaction outputs) is
@@ -14,7 +19,8 @@ public class TxHandler {
     	if (utxoPool != null) {
     		pool = new UTXOPool(utxoPool);
     	}
-    }
+    	
+    	transPool = new HashMap<byte[], Transaction>();    }
 
     /**
      * @return true if:
@@ -34,11 +40,7 @@ public class TxHandler {
     	if (tx.getOutputs() == null || tx.getOutputs().size() == 0){
     		return false;
     	}
-    	
-    	if (tx.getInputs() == null || tx.getInputs().size() == 0){
-    		return false;
-    	}
-    	
+    	   	
     	// (1) all outputs claimed by {@code tx} are in the current UTXO pool,
     	// (4) all of {@code tx}s output values are non-negative,
     	double outputSum = 0;
@@ -57,13 +59,37 @@ public class TxHandler {
     		outputSum += output.value;
     	}
     	
+    	// (2) the signatures on each input of {@code tx} are valid, 
+    	// (3) no UTXO is claimed multiple times by {@code tx},
     	double inputSum = 0;
+    	Set<UTXO> metUTXO = new HashSet<UTXO>();
     	ArrayList<Transaction.Input> inputs = tx.getInputs();
-    	for (int i = 0; i < inputs.size(); ++i) {
-    		Transaction.Input input = inputs.get(i);
+    	if (inputs != null) {
+    		for (int i = 0; i < inputs.size(); ++i) {
+    			Transaction.Input input = inputs.get(i);
+    			
+    			// 确保input对应的uxto不会在pool里面重复
+    			UTXO utxo = new UTXO(input.prevTxHash, input.outputIndex);
+    			if (metUTXO.contains(utxo)) {
+    				return false;
+    			} else {
+    				metUTXO.add(utxo);
+    			}
+    			
+    			Transaction preTran = transPool.get(input.prevTxHash);
+    			Transaction.Output preOutput = preTran.getOutput(input.outputIndex);
+    			
+    			byte[] messageToSign = tx.getRawDataToSign(i);
+    			if (!Crypto.verifySignature(preOutput.address, messageToSign, input.signature)) {
+    				return false;
+    			}
+    			inputSum += preOutput.value;
+    		}
     	}
     	
-    	
+    	// (5) the sum of tx's input values is greater than or equal to the sum of its output
+        // values; and false otherwise.
+    	return inputSum >= outputSum; 
     }
 
     /**
