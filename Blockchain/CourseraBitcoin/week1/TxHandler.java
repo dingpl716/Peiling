@@ -1,5 +1,9 @@
+import java.util.ArrayList;
+
 public class TxHandler {
 
+	private UTXOPool pool = null;
+	
     /**
      * Creates a public ledger whose current UTXOPool (collection of unspent transaction outputs) is
      * {@code utxoPool}. This should make a copy of utxoPool by using the UTXOPool(UTXOPool uPool)
@@ -7,6 +11,9 @@ public class TxHandler {
      */
     public TxHandler(UTXOPool utxoPool) {
         // IMPLEMENT THIS
+    	if (utxoPool != null) {
+    		pool = new UTXOPool(utxoPool);
+    	}
     }
 
     /**
@@ -20,6 +27,43 @@ public class TxHandler {
      */
     public boolean isValidTx(Transaction tx) {
         // IMPLEMENT THIS
+    	if (tx == null) {
+    		return false;
+    	}
+    	
+    	if (tx.getOutputs() == null || tx.getOutputs().size() == 0){
+    		return false;
+    	}
+    	
+    	if (tx.getInputs() == null || tx.getInputs().size() == 0){
+    		return false;
+    	}
+    	
+    	// (1) all outputs claimed by {@code tx} are in the current UTXO pool,
+    	// (4) all of {@code tx}s output values are non-negative,
+    	double outputSum = 0;
+    	ArrayList<Transaction.Output> outputs = tx.getOutputs();
+    	for (int i = 0; i < outputs.size(); ++i) {
+    		UTXO utxo = new UTXO(tx.getHash(), i);
+    		if (!pool.contains(utxo)){
+    			return false;
+    		}
+    		
+    		Transaction.Output output = outputs.get(i);
+    		if (output == null || output.value < 0) {
+    			return false;
+    		}
+    		
+    		outputSum += output.value;
+    	}
+    	
+    	double inputSum = 0;
+    	ArrayList<Transaction.Input> inputs = tx.getInputs();
+    	for (int i = 0; i < inputs.size(); ++i) {
+    		Transaction.Input input = inputs.get(i);
+    	}
+    	
+    	
     }
 
     /**
