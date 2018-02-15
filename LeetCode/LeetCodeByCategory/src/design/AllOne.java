@@ -121,6 +121,24 @@ public class AllOne {
         }
     }
     
+    /** Returns one of the keys with maximal value. */
+    public String getMaxKey() {
+    	if (map.isEmpty() || max == null) {
+    		return "";
+    	} else {
+    		return max.getFirst();
+    	}
+    }
+    
+    /** Returns one of the keys with Minimal value. */
+    public String getMinKey() {
+        if (map.isEmpty() || min == null) {
+        	return "";
+        } else {
+        	return min.getFirst();
+        }
+    }
+    
     /**
      * 在这个data structure中新增一个之前不存在的key
      * @param key
@@ -311,23 +329,6 @@ public class AllOne {
     	}
     	
     	return newNode;
-    }
-    /** Returns one of the keys with maximal value. */
-    public String getMaxKey() {
-    	if (map.isEmpty() || max == null) {
-    		return "";
-    	} else {
-    		return max.getFirst();
-    	}
-    }
-    
-    /** Returns one of the keys with Minimal value. */
-    public String getMinKey() {
-        if (map.isEmpty() || min == null) {
-        	return "";
-        } else {
-        	return min.getFirst();
-        }
     }
 
     public static void main(String[] args) {

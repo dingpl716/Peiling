@@ -112,4 +112,30 @@ public class BestTimeToBuyAndSellStock {
     	}
     	return maxProfit;
     }
+
+//    Say you have an array for which the ith element is the price of a given stock on day i.
+//
+//    Design an algorithm to find the maximum profit. You may complete at most k transactions.
+//
+//    Note:
+//    You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+    /**
+     * 买股票第四题
+     * 
+     * dp[i, j] represents the max profit up until prices[j] using at most i transactions. 
+     * dp[i, j] = max(dp[i, j-1], prices[j] - prices[jj] + dp[i-1, jj]) { jj in range of [0, j-1] }
+     *          = max(dp[i, j-1], prices[j] + max(dp[i-1, jj] - prices[jj]))
+     * dp[0, j] = 0; 0 transactions makes 0 profit
+     * dp[i, 0] = 0; if there is only one price data point you can't make any transaction.
+     * 
+     * dp[i, j]表示，到第j天为止，在你最多昨晚i笔交易过后，你能获得的最大利润。此时的最大利润不一定
+     * 是做了i笔交易获得的，可能比i小。
+     * dp[i, j] = max(dp[i, j-1], prices[j] - prices[jj] + dp[i-1, jj]) { jj in range of [0, j-1] }
+     * 这个公式的意思是，在0到j-1（闭区间）之间找一个点，设为jj，那么我们用prices[j] - prices[jj]得到
+     * 这个点到j点做一笔交易能得到的利润，然后再加上dp[i-1,jj]，就是说在jj之前我们最多做i-1笔交易获得
+     * 的利润。
+     */
+    public int maxProfit(int k, int[] prices) {
+        return 0;
+    }   
 }

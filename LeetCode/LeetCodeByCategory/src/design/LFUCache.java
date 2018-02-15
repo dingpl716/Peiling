@@ -74,7 +74,7 @@ public class LFUCache {
 	}
 	
 	// frequency节点, 每一个节点都包含一条与之frequency相对应的循环双向数据链
-	// frequency节点本身是一个单向链，但是不循环！！！
+	// frequency节点本身是一个双向链，但是不循环！！！
 	private static class FreqNode{
 		int freq;
 		
