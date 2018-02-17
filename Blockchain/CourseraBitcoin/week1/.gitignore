@@ -5,3 +5,10 @@
 /TxHandler.class
 /UTXO.class
 /UTXOPool.class
+/Main$Tx.class
+/Main.class
+/IsValidTest.class
+/UtxoTestSet$UtxoTestSetBuilder.class
+/UtxoTestSet.class
+/ValidationLists$Builder.class
+/ValidationLists.class

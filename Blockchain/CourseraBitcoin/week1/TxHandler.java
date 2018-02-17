@@ -25,6 +25,7 @@ public class TxHandler {
     /**
      * @return true if:
      * (1) all outputs claimed by {@code tx} are in the current UTXO pool, 
+     * 条件1的表述是有错误的。应该是All inputs claimed by tx are in the current pool
      * (2) the signatures on each input of {@code tx} are valid, 
      * (3) no UTXO is claimed multiple times by {@code tx},
      * (4) all of {@code tx}s output values are non-negative, and
@@ -41,16 +42,10 @@ public class TxHandler {
     		return false;
     	}
     	   	
-    	// (1) all outputs claimed by {@code tx} are in the current UTXO pool,
     	// (4) all of {@code tx}s output values are non-negative,
     	double outputSum = 0;
     	ArrayList<Transaction.Output> outputs = tx.getOutputs();
     	for (int i = 0; i < outputs.size(); ++i) {
-    		UTXO utxo = new UTXO(tx.getHash(), i);
-    		if (!pool.contains(utxo)){
-    			return false;
-    		}
-    		
     		Transaction.Output output = outputs.get(i);
     		if (output == null || output.value < 0) {
     			return false;
@@ -59,6 +54,7 @@ public class TxHandler {
     		outputSum += output.value;
     	}
     	
+    	// (1) all outputs(should be inputs) claimed by {@code tx} are in the current UTXO pool,
     	// (2) the signatures on each input of {@code tx} are valid, 
     	// (3) no UTXO is claimed multiple times by {@code tx},
     	double inputSum = 0;
@@ -68,7 +64,7 @@ public class TxHandler {
     		for (int i = 0; i < inputs.size(); ++i) {
     			Transaction.Input input = inputs.get(i);
     			
-    			// 确保input对应的uxto不会在pool里面重复
+    			//条件(3) 确保input对应的uxto不会在pool里面重复
     			UTXO utxo = new UTXO(input.prevTxHash, input.outputIndex);
     			if (metUTXO.contains(utxo)) {
     				return false;
@@ -76,13 +72,18 @@ public class TxHandler {
     				metUTXO.add(utxo);
     			}
     			
-    			Transaction preTran = transPool.get(input.prevTxHash);
-    			Transaction.Output preOutput = preTran.getOutput(input.outputIndex);
+    			// 条件1
+    			if (!pool.contains(utxo)){
+        			return false;
+        		}
     			
+    			// 条件2
+    			Transaction.Output preOutput = pool.getTxOutput(utxo);
     			byte[] messageToSign = tx.getRawDataToSign(i);
     			if (!Crypto.verifySignature(preOutput.address, messageToSign, input.signature)) {
     				return false;
     			}
+    			
     			inputSum += preOutput.value;
     		}
     	}
@@ -99,6 +100,7 @@ public class TxHandler {
      */
     public Transaction[] handleTxs(Transaction[] possibleTxs) {
         // IMPLEMENT THIS
+    	return null;
     }
 
 }
