@@ -7,7 +7,6 @@ import java.util.Set;
 public class TxHandler {
 
 	private UTXOPool pool = null;
-	private Map<byte[], Transaction> transPool = null;
 	
     /**
      * Creates a public ledger whose current UTXOPool (collection of unspent transaction outputs) is
@@ -19,8 +18,7 @@ public class TxHandler {
     	if (utxoPool != null) {
     		pool = new UTXOPool(utxoPool);
     	}
-    	
-    	transPool = new HashMap<byte[], Transaction>();    }
+    }
 
     /**
      * @return true if:
@@ -100,7 +98,33 @@ public class TxHandler {
      */
     public Transaction[] handleTxs(Transaction[] possibleTxs) {
         // IMPLEMENT THIS
-    	return null;
+    	if (possibleTxs == null || possibleTxs.length == 0) {
+    		return possibleTxs;
+    	}
+    	
+    	ArrayList<Transaction> acceptedTransactions = new ArrayList<Transaction>();
+    	
+    	for (int i = 0; i < possibleTxs.length; ++i) {
+    		if (!isValidTx(possibleTxs[i])) {
+    			continue;
+    		}
+    		
+    		acceptedTransactions.add(possibleTxs[i]);
+    		updatePool(possibleTxs[i]);
+    	}
+    	
+    	return acceptedTransactions.toArray(new Transaction[acceptedTransactions.size()]);
     }
-
+    
+    private void updatePool(Transaction acceptedTransaction){
+    	for (Transaction.Input input : acceptedTransaction.getInputs()) {
+    		pool.removeUTXO(new UTXO(input.prevTxHash, input.outputIndex));
+    	}
+    	
+    	ArrayList<Transaction.Output> outputs = acceptedTransaction.getOutputs();
+    	for (int i = 0; i < outputs.size(); ++i) {
+    		Transaction.Output output = outputs.get(i);
+    		pool.addUTXO(new UTXO(acceptedTransaction.getHash(), i), output);
+    	}
+    }
 }
