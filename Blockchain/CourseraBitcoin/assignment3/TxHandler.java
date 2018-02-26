@@ -8,6 +8,10 @@ public class TxHandler {
 
 	private UTXOPool pool = null;
 	
+    public UTXOPool getUTXOPool() {
+    	return pool;
+    }
+    
     /**
      * Creates a public ledger whose current UTXOPool (collection of unspent transaction outputs) is
      * {@code utxoPool}. This should make a copy of utxoPool by using the UTXOPool(UTXOPool uPool)
@@ -18,7 +22,7 @@ public class TxHandler {
     	if (utxoPool != null) {
     		pool = new UTXOPool(utxoPool);
     	}
-    }
+	}
 
     /**
      * @return true if:
