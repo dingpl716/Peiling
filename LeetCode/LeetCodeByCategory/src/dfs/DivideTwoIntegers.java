@@ -57,8 +57,8 @@ public class DivideTwoIntegers {
     
     /**
      * 只处理同为负的情况, 数传进来之前保证都是负数
-     * @param dividend
-     * @param divisor
+     * @param dividend 分子
+     * @param divisor  分母
      * @return
      */
     private int dfs(int dividend, int divisor) {
@@ -66,12 +66,14 @@ public class DivideTwoIntegers {
     		return 1;
     	}
     	
-    	int powerOfDivisor = divisor;
-    	int count = 1;
-    	
-		if (dividend > divisor) {
+    	// 因为都是负数，所以这里分子要大于分母
+    	// 就是分子的绝对值小于分母的绝对值
+    	if (dividend > divisor) {
 			return 0;
 		}
+    	
+    	int powerOfDivisor = divisor;
+    	int count = 1;
 		
 		while ((powerOfDivisor + powerOfDivisor < 0) && // 此处必须要加上这个判断，不然相加的结果可能会从负数变为正数
 				(powerOfDivisor + powerOfDivisor > dividend)) {

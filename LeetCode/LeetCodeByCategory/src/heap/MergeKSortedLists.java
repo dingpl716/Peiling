@@ -6,6 +6,7 @@ import definition.ListNode;
 
 //Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
 public class MergeKSortedLists {
+	
 	public static class ArrayMinHeap<T> {
 		public Comparator<T> comparator;
 		public ArrayMinHeap (Comparator<T> comp) {

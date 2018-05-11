@@ -41,7 +41,7 @@ public class BestTimeToBuyAndSellStock {
 //    (ie, buy one and sell one share of the stock multiple times). 
 //    However, you may not engage in multiple transactions at the same time 
 //    (ie, you must sell the stock before you buy again).   
-    // 这个题就是照到所以的上升子序列， 之后i > i-1就可以把这部分收益计入最终结果
+    // 这个题就是找到所有的上升子序列， 之后i > i-1就可以把这部分收益计入最终结果
     public int maxProfitII(int[] prices) {
         int result = 0;
         if(prices == null || prices.length == 1)
@@ -128,7 +128,7 @@ public class BestTimeToBuyAndSellStock {
      * dp[0, j] = 0; 0 transactions makes 0 profit
      * dp[i, 0] = 0; if there is only one price data point you can't make any transaction.
      * 
-     * dp[i, j]表示，到第j天为止，在你最多昨晚i笔交易过后，你能获得的最大利润。此时的最大利润不一定
+     * dp[i, j]表示，到第j天为止，在你最多做完i笔交易过后，你能获得的最大利润。此时的最大利润不一定
      * 是做了i笔交易获得的，可能比i小。
      * dp[i, j] = max(dp[i, j-1], prices[j] - prices[jj] + dp[i-1, jj]) { jj in range of [0, j-1] }
      * 这个公式的意思是，在0到j-1（闭区间）之间找一个点，设为jj，那么我们用prices[j] - prices[jj]得到
